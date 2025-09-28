@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <locale.h>
+#include <ctype.h>
+#include <stdlib.h>
+
+
+int manhattan(int x1, int y1, int x2, int y2){
+    int dx = x1 - x2; if (dx < 0) dx = -dx;
+    int dy = y1 - y2; if (dy < 0) dy = -dy;
+    return dx + dy;
+}
+
+void imprimi_matriz(int linha,int coluna,char vet[linha][coluna]){
+    for (int i=0;i<linha;i++){
+        for(int j=0;j<coluna;j++){
+           printf("%c   ",vet[i][j]);
+        }
+        printf("\n\n");
+    }
+}
+
+int main(){
+    //Estou criando uma matriz para representar o labirinto.
+     char direcao;
+     int dx,dy,cal_m,linha, coluna;
+     int robo[2]={1,1};//Criei a variavel robo para percorrer o jogo.
+     char matriz[7][7] = {//linhas e colunas de # para deixar a matriz mais "bonita"
+        {'#','#', '#', '#','#','#','#'},
+        {'#','S', '.', '.','#','.','#'},
+        {'#','.', '#', '.','#','.','#'},
+        {'#','.', '#', '.','.','.','#'},
+        {'#','.', '.', '.','#','G','#'},
+        {'#','.', '#', '.','.','.','#'},
+        {'#','#', '#', '#','#','#','#'}
+    };
+    
+    cal_m=manhattan(robo[0], robo[1], 4, 5);
+    
+    while(1){
+        //Imprimir a matriz
+        imprimi_matriz(7, 7,matriz);
+        
+        printf("\nCalculo de Manhattan: %d\n",cal_m);
+        printf("\nDigite a direção desejada:");
+        scanf("%s",&direcao);
+        direcao=toupper(direcao);//Função para transformar em maiusculo.
+        
+        system("clear");//limpa o console.
+        
+        //Validação da variável direção informada pelo usúario.
+        if(direcao=='Q'){
+            printf("Saiu do jogo\n");
+            break;
+        }else if(direcao=='W'|| direcao=='A'|| direcao=='S'|| direcao=='D'){
+            
+            linha=robo[0];
+            coluna=robo[1];
+            
+            if(direcao=='W'){
+                linha--;
+            }else if(direcao=='A'){
+                coluna--;
+            }else if(direcao=='S'){
+                linha++;
+            }else{
+                coluna++;
+            }
+            
+            if(matriz[linha][coluna]=='.'){
+                matriz[linha][coluna]='S';
+                matriz[robo[0]][robo[1]]='.';
+                
+                robo[0]=linha;
+                robo[1]=coluna;
+                
+                cal_m=manhattan(robo[0], robo[1], 4, 5);
+                
+            }else if(matriz[linha][coluna]=='G'){
+                printf("Você chegou no final do jogo!");
+                break;
+            }else{
+                printf("\nCaminho inválido, pois tem uma parede!\n");
+            }
+        }else{
+            printf("Não é valido\n");
+        }
+    
+    }
+    return 0;
+}
