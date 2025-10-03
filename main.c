@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <locale.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -8,6 +7,15 @@ int manhattan(int x1, int y1, int x2, int y2){
     int dx = x1 - x2; if (dx < 0) dx = -dx;
     int dy = y1 - y2; if (dy < 0) dy = -dy;
     return dx + dy;
+}
+
+void imprimi_instrucoes(){
+    printf("\nComo jogar:\n");
+    printf("\nVocê é a letra S e seu objetivo é chegar a letra G (ponto final).\n");
+    printf("\nVocê só pode andar pelos (.)\n(#) são paredes!\n");
+    printf("\nPara andar com seu robo (S)\n");
+    printf("Segue os comandos\n-W(para cima) \n-S(para baixo) \n-A(para esquerda)");
+    printf("\n-D(para direita) \n\nSe quiser parar o jogo digite Q (quit)\n\n");
 }
 
 void imprimi_matriz(int linha,int coluna,char vet[linha][coluna]){
@@ -36,10 +44,15 @@ int main(){
     
     cal_m=manhattan(robo[0], robo[1], 4, 5);
     
+    printf("\n------------------------------\n");
+    printf("\nBem vindo ao jogo do labirinto\n");
+    printf("\n------------------------------\n\n\n");//estética
+
     while(1){
         //Imprimir a matriz
         imprimi_matriz(7, 7,matriz);
-        
+
+        imprimi_instrucoes();
         printf("\nCalculo de Manhattan: %d\n",cal_m);
         printf("\nDigite a direção desejada:");
         scanf("%s",&direcao);
